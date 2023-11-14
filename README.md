@@ -1,4 +1,4 @@
-# brokoli-ui
+# react-web3-wallet
 
 <p align="center">
   <a href="https://app.voltz.xyz/">
@@ -11,9 +11,9 @@
 <p align="center">Powering Voltz UI and beyond!!!</p>
 
 <p align="center">
-  <img src="https://badgen.net/github/tag/Voltz-Protocol/brokoli-ui" alt="Tag" />
-  <img src="https://badgen.net/github/checks/Voltz-Protocol/brokoli-ui/main" alt="Checks" />
-  <img src="https://badgen.net/github/last-commit/Voltz-Protocol/brokoli-ui/main" alt="Checks" />
+  <img src="https://badgen.net/github/tag/Voltz-Protocol/react-web3-wallet" alt="Tag" />
+  <img src="https://badgen.net/github/checks/Voltz-Protocol/react-web3-wallet/main" alt="Checks" />
+  <img src="https://badgen.net/github/last-commit/Voltz-Protocol/react-web3-wallet/main" alt="Checks" />
 </p>
 
 <p align="center">
@@ -53,21 +53,6 @@ Branch names can start with the prefixes found in the regex under '.husky/pre-co
 * create a branch from `main`, follow the naming convention for a branch
 * wait for approval, resolve comments and make sure you have a green build
 * merge to `main` using **Rebase and merge**
-
-## Cloudflare
-
-`brokoli-ui` uses Cloudflare to automate the process around creating builds that can be shared with the stakeholders.
-What this means is that any push to a branch will create an environment for the team to test against!
-
-These are sites hosted on Cloudflare and the build from main can be found at [brokoli.voltz.xyz](brokoli.voltz.xyz).
-
-### Rules
-
-**Environment branches (main)**
-* merges to branch `main` always deploy to [brokoli.voltz.xyz](brokoli.voltz.xyz) with ENV variables specific for `main`
-
-**Candidate branches:**
-* commits on branches that follow the pattern `feat/*`, `fix/*`, `chore/*`, `refactor/*` and `test/*`
 
 ## Tools
 
