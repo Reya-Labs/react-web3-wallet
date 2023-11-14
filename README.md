@@ -57,4 +57,5 @@ Branch names can start with the prefixes found in the regex under '.husky/pre-co
 ## Tools
 
 Helpful tools to install to improve your development life!
+
 * [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
