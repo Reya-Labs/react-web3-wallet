@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-An UI design language and React UI library powered by 🥦🥦🥦 and ☕
+Library that takes care of connecting to different web3 wallets.
 </p>
 
 <br />
