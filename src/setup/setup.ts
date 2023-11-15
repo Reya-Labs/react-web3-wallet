@@ -14,7 +14,7 @@ import {
 } from './types';
 import { validateSetupParams } from './validate-setup-params';
 
-export const setup = (params: SetupParams) => {
+export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
   const validationResult = validateSetupParams(params);
   if (!validationResult.valid) {
     throw new Error(validationResult.message);
@@ -86,5 +86,5 @@ export const setup = (params: SetupParams) => {
     connectors,
     publicClient,
     webSocketPublicClient,
-  });
+  }) as ReturnType<typeof createConfig>;
 };

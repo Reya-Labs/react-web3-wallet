@@ -9,7 +9,7 @@ export type UseWalletConnectResult = {
     name: string;
   }>;
   disconnect: () => void;
-  error: any; // The type of error can vary depending on the context.
+  error: Error | null;
   isLoading: boolean;
 };
 

@@ -1,10 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
-import image from '@rollup/plugin-image';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-import svgr from '@svgr/rollup';
 import bundleSize from 'rollup-plugin-bundle-size';
-import css from 'rollup-plugin-import-css';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import { terser } from 'rollup-plugin-terser';
 const dts = require('rollup-plugin-dts');
@@ -12,6 +9,7 @@ const packageJson = require('./package.json');
 
 export default [
   {
+    external: ['react', 'react-dom', 'styled-components'],
     input: 'src/index.ts',
     output: [
       {
@@ -26,12 +24,6 @@ export default [
       },
     ],
     plugins: [
-      css(),
-      svgr({
-        memo: true,
-        exportType: 'named',
-      }),
-      image(),
       peerDepsExternal(),
       resolve(),
       commonjs(),
@@ -39,7 +31,6 @@ export default [
       terser(),
       bundleSize(),
     ],
-    external: ['react', 'react-dom', 'styled-components'],
   },
   {
     input: 'dist/esm/types/index.d.ts',

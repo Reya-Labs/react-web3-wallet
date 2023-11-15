@@ -6,6 +6,6 @@ export default {
     options: {},
   },
   docs: {
-    autodocs: true,
+    autodocs: false,
   },
 };
