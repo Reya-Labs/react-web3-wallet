@@ -105,7 +105,9 @@
     "semantic-release-cli": "5.4.4",
     "storybook": "7.5.1",
     "typescript": "4.9.5",
-    "url-loader": "4.1.1"
+    "url-loader": "4.1.1",
+    "viem": "1.19.1",
+    "wagmi": "1.4.6"
   },
   "resolutions": {
     "underscore.string@~2.2.0rc": "2.2.1"
