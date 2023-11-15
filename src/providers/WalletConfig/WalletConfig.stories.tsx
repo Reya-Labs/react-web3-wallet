@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import { useWalletAccount } from '../../hooks/useWalletAccount';
 import { useWalletConnect } from '../../hooks/useWalletConnect';
 import { setup, SetupParams } from '../../setup';
-import { WalletConfig } from './index';
+import { WalletConfig } from '.';
 
 export default {
   args: {},

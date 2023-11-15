@@ -59,3 +59,88 @@ Branch names can start with the prefixes found in the regex under '.husky/pre-co
 Helpful tools to install to improve your development life!
 
 * [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+
+# How to Connect
+
+## Step 1: Configuring Connectors
+
+First, we create a new config set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors.
+
+```tsx
+import { setup, WalletConfig } from '@voltz-protocol/react-web3-wallet';
+
+// Set up wagmi config
+const config = setup({
+    supportedChains: ['mainnet', 'goerli'],
+    supportedWallets: [{
+        type: 'metamask',
+    }, {
+        type: 'wallet-connect',
+        projectId: process.env.WALLET_CONNECT_PROJECT_ID,
+    }, {
+        type: 'coinbase',
+        appName: process.env.COINBASE_APP_NAME,
+    },],
+});
+
+// Pass config to React Context Provider
+function App() {
+    return (
+        <WalletConfig config={config}>
+            <Profile />
+        </WalletConfig>
+    )
+}
+```
+
+
+## Step 2: Connect account and show it
+
+Let's create the needed `Profile` component. Note this component uses `brokoli-ui` components so make sure you have a `ThemeProvider` 
+wrapping the `brokoli-ui` components
+
+```tsx
+import { Button, ThemeProvider, Typography } from 'brokoli-ui';
+import React, { useMemo } from 'react';
+import { useWalletAccount, useWalletConnect } from '@voltz-protocol/react-web3-wallet';
+
+// Pass config to React Context Provider
+function Profile() {
+    const { connect, connectors, error } = useWalletConnect();
+    const { disconnect, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
+    if (isConnected) {
+        return (
+            <div>
+                <img alt="ENS Avatar" src={ensAvatar!} />
+                <Typography colorToken="white100" typographyToken="primaryBodyMediumRegular">
+                    {ensName ? `${ensName} (${address!})` : address}
+                </Typography>
+                <Typography colorToken="white100" typographyToken="primaryBodySmallRegular">
+                    Connected to {connector?.name}{' '}
+                </Typography>
+                <Button variant="secondary" onClick={disconnect}>
+                    Disconnect
+                </Button>
+            </div>
+        );
+    }
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {connectors.map((c) => (
+                <Button
+                    key={c.id}
+                    bottomLeftText={error ? error.message : ''}
+                    bottomLeftTextColorToken="error100"
+                    disabled={c.disabled}
+                    variant="primary"
+                    onClick={() => connect(c.id)}
+                >
+                    {c.name}
+                    {c.connecting && ' (connecting)'}
+                </Button>
+            ))}
+        </div>
+    );
+}
+```
