@@ -7357,7 +7357,7 @@ __metadata:
     "@types/react": "npm:18.2.37"
     "@types/react-dom": "npm:17.0.18"
     babel-loader: "npm:8.3.0"
-    brokoli-ui: "npm:3.2.0"
+    brokoli-ui: "npm:3.3.0"
     camelcase: "npm:6.3.0"
     concurrently: "npm:7.6.0"
     dpdm: "npm:3.11.0"
@@ -10024,9 +10024,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brokoli-ui@npm:3.2.0":
-  version: 3.2.0
-  resolution: "brokoli-ui@npm:3.2.0"
+"brokoli-ui@npm:3.3.0":
+  version: 3.3.0
+  resolution: "brokoli-ui@npm:3.3.0"
   dependencies:
     "@floating-ui/react": "npm:0.19.0"
     "@nivo/core": "npm:0.80.0"
@@ -10045,7 +10045,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-router-dom: 6.9.0
-  checksum: 57b6a2124d7d6983f2a279dfc52091116c148ebf3e0e0a5343ea2b617ad9c0d3ff93a0057ea6495a480af567edff11eaf31ae1cfa562c065dd5b3983ce125123
+  checksum: 8016bac3ecf9f9a6cb967c6638a1533e7bbeeb86ad7d9bb48eabd191c90a81b1c82538ec7ee3d14efbdad4a280b550a78b0ef8254d319087cf9c0de64686d686
   languageName: node
   linkType: hard
 
