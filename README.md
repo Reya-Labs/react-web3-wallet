@@ -66,7 +66,7 @@ Helpful tools to install to improve your development life!
 Make sure the package and peerDependencies are installed:
 
 ```shell
-yarn add @voltz-protocol/react-web3-walllet viem wagmi
+yarn add @voltz-protocol/react-web3-wallet viem wagmi
 ```
 
 ## Step 1: Configuring Connectors

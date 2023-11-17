@@ -7325,9 +7325,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@voltz-protocol/react-web3-walllet@workspace:.":
+"@voltz-protocol/react-web3-wallet@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@voltz-protocol/react-web3-walllet@workspace:."
+  resolution: "@voltz-protocol/react-web3-wallet@workspace:."
   dependencies:
     "@babel/core": "npm:7.20.12"
     "@babel/preset-env": "npm:7.23.3"
