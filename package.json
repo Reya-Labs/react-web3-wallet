@@ -2,7 +2,6 @@
   "name": "@voltz-protocol/react-web3-wallet",
   "version": "1.2.0",
   "description": "Library that takes care of connecting to different web3 wallets.",
-  "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.js",
   "types": "dist/esm/types",
   "type": "module",
