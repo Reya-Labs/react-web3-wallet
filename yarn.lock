@@ -4725,13 +4725,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@remix-run/router@npm:1.4.0"
-  checksum: 8b10f07fff5b51c0172b27b780e00c319377963bbebdc7fae3f0ab6919903fa7e47f2be7f001f5b14b5c5b9d87c3bd76a05cfd7ed9e8de1214efb4bf6325c508
-  languageName: node
-  linkType: hard
-
 "@rollup/plugin-commonjs@npm:24.0.1":
   version: 24.0.1
   resolution: "@rollup/plugin-commonjs@npm:24.0.1"
@@ -7357,7 +7350,7 @@ __metadata:
     "@types/react": "npm:18.2.37"
     "@types/react-dom": "npm:17.0.18"
     babel-loader: "npm:8.3.0"
-    brokoli-ui: "npm:4.0.1"
+    brokoli-ui: "npm:5.0.1"
     camelcase: "npm:6.3.0"
     concurrently: "npm:7.6.0"
     dpdm: "npm:3.11.0"
@@ -7380,7 +7373,6 @@ __metadata:
     prettier: "npm:3.0.2"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    react-router-dom: "npm:6.9.0"
     rollup: "npm:3.11.0"
     rollup-plugin-bundle-size: "npm:1.0.3"
     rollup-plugin-dts: "npm:5.1.1"
@@ -10024,9 +10016,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brokoli-ui@npm:4.0.1":
-  version: 4.0.1
-  resolution: "brokoli-ui@npm:4.0.1"
+"brokoli-ui@npm:5.0.1":
+  version: 5.0.1
+  resolution: "brokoli-ui@npm:5.0.1"
   dependencies:
     "@floating-ui/react": "npm:0.19.0"
     "@nivo/core": "npm:0.80.0"
@@ -10034,7 +10026,7 @@ __metadata:
     facepaint: "npm:1.2.1"
     react-animate-height: "npm:3.2.2"
     react-currency-input-field: "npm:3.6.11"
-    react-metamask-avatar: "npm:2.0.1"
+    react-metamask-avatar: "npm:2.0.3"
     react-responsive: "npm:9.0.2"
     react-tiny-popover: "npm:7.2.0"
     react-toastify: "npm:8.2.0"
@@ -10044,8 +10036,7 @@ __metadata:
     ethers: 5.7.2
     react: 18.2.0
     react-dom: 18.2.0
-    react-router-dom: 6.9.0
-  checksum: 794e199e3b31d6640c96a6e178caaa7bf7d4c69d4be00e66b0ae835d9770608733f6f6248122f68c6a21784455b221582abb19f0064224f7dd394105a05bc49f
+  checksum: d8fdc082dc8e4dc7020b38c1918f76e251041f1b94671e88d4836feda344aa69e01aa847ed8da6d5d1f011991d6cdb50d2c14c7936b167c35151528903de3ed8
   languageName: node
   linkType: hard
 
@@ -21166,13 +21157,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-metamask-avatar@npm:2.0.1":
-  version: 2.0.1
-  resolution: "react-metamask-avatar@npm:2.0.1"
+"react-metamask-avatar@npm:2.0.3":
+  version: 2.0.3
+  resolution: "react-metamask-avatar@npm:2.0.3"
   peerDependencies:
+    "@emotion/react": 11.7.1
+    "@emotion/styled": 11.6.0
+    "@metamask/jazzicon": 2.0.0
     react: ">=17.0.2"
     react-dom: ">=17.0.2"
-  checksum: 614131a80aec3223b2efe16cabc1a3865e8a5609f060fcbc413527ae0bf03bf396630eeadfdd5b80b50cbde2ff7d23adc79060feb388c6058d18c74acc4e0071
+  checksum: 06e5281d5966a74f703824e170716de1f0ef2faee6d3bb6946d04bc2cad14a748cc0d141d614715463732c0907e581a9e183b1272fc70e1f454cd1b7e85f978a
   languageName: node
   linkType: hard
 
@@ -21229,30 +21223,6 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
   checksum: c58b30d8b8ff993edbc73f7de59a2d86d8abd6380b06a9b41667c3bdd5401e5e710fa1d0fdac21368759ab9b958e8b479a111329a06e9b0241ee08f500b37a20
-  languageName: node
-  linkType: hard
-
-"react-router-dom@npm:6.9.0":
-  version: 6.9.0
-  resolution: "react-router-dom@npm:6.9.0"
-  dependencies:
-    "@remix-run/router": "npm:1.4.0"
-    react-router: "npm:6.9.0"
-  peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 04fa9d4723746a471510fb11167d7aed8409cb257e6475416e19ec2de575c3e45cb428f1d3d65d68f494c816115fed12dd788363a276b8e240ed1429ff08720e
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.9.0":
-  version: 6.9.0
-  resolution: "react-router@npm:6.9.0"
-  dependencies:
-    "@remix-run/router": "npm:1.4.0"
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 32b40df4d84887e50d85a4e6a8bee7b2c9e534c3e42163092568dc01e685147d706598e02bfa70f0098c14800b2a3819c65a1cf1f03c8d00a8e89d54c5ecaca3
   languageName: node
   linkType: hard
 
