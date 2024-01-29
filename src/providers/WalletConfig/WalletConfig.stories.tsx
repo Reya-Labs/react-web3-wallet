@@ -22,7 +22,7 @@ const WalletButtons: React.FunctionComponent = () => {
       const readinessResult = await getConnectorsReadiness();
       setReadiness(readinessResult);
     })();
-  }, [connector, setReadiness]);
+  }, [connectors, setReadiness]);
 
   if (isConnected) {
     return (
