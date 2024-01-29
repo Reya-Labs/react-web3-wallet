@@ -1,20 +1,22 @@
 import { Connector, useConnect, useDisconnect } from 'wagmi';
 
+export type ConnectorReadiness = Record<Connector['id'], boolean>;
+
 export type UseWalletConnectResult = {
   connect: (connectorId: Connector['id']) => void;
   connectors: Array<{
     connecting: boolean;
-    disabled: boolean;
     id: Connector['id'];
     name: string;
   }>;
   disconnect: () => void;
   error: Error | null;
   isLoading: boolean;
+  getConnectorsReadiness: () => Promise<ConnectorReadiness>;
 };
 
 export const useWalletConnect = (): UseWalletConnectResult => {
-  const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
+  const { connect, connectors, error, isPending } = useConnect();
   const { disconnect } = useDisconnect();
 
   const handleConnect = (connectorId: Connector['id']) => {
@@ -28,13 +30,19 @@ export const useWalletConnect = (): UseWalletConnectResult => {
   return {
     connect: handleConnect,
     connectors: connectors.map((connector) => ({
-      connecting: isLoading && pendingConnector?.id === connector.id,
-      disabled: !connector.ready,
+      connecting: isPending,
       id: connector.id,
       name: connector.name,
     })),
     disconnect,
     error,
-    isLoading,
+    getConnectorsReadiness: async () => {
+      const readiness: Record<Connector['id'], boolean> = {};
+      for (const connector of connectors) {
+        readiness[connector.id] = !!(await connector.getProvider());
+      }
+      return readiness;
+    },
+    isLoading: isPending,
   };
 };

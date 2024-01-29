@@ -3,7 +3,7 @@ import { Button, ThemeProvider, Typography } from 'brokoli-ui';
 import React, { useMemo } from 'react';
 
 import { useWalletAccount } from '../../hooks/useWalletAccount';
-import { useWalletConnect } from '../../hooks/useWalletConnect';
+import { ConnectorReadiness, useWalletConnect } from '../../hooks/useWalletConnect';
 import { setup, SetupParams } from '../../setup';
 import { WalletConfig } from '.';
 
@@ -14,8 +14,16 @@ export default {
 } as Meta<typeof WalletConfig>;
 
 const WalletButtons: React.FunctionComponent = () => {
-  const { connect, connectors, error } = useWalletConnect();
+  const { getConnectorsReadiness, connect, connectors, error } = useWalletConnect();
   const { disconnect, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
+  const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});
+  React.useEffect(() => {
+    (async () => {
+      const readinessResult = await getConnectorsReadiness();
+      setReadiness(readinessResult);
+    })();
+  }, [connector, setReadiness]);
+
   if (isConnected) {
     return (
       <div>
@@ -40,7 +48,7 @@ const WalletButtons: React.FunctionComponent = () => {
           key={c.id}
           bottomLeftText={error ? error.message : ''}
           bottomLeftTextColorToken="error100"
-          disabled={c.disabled}
+          disabled={!readiness[c.id]}
           variant="primary"
           onClick={() => connect(c.id)}
         >

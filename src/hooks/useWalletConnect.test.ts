@@ -14,17 +14,15 @@ describe('useWalletConnect', () => {
   it('should return correct values when connectors are available', () => {
     // Mock the behavior of useConnect with connectors
     const mockConnectors = [
-      { id: 'metamask', name: 'MetaMask', ready: true },
-      { id: 'wallet-connect', name: 'WalletConnect', ready: true },
+      { id: 'metamask', name: 'MetaMask' },
+      { id: 'wallet-connect', name: 'WalletConnect' },
     ];
-    const mockPendingConnector = { id: 'metamask' };
 
     (useConnect as jest.Mock).mockReturnValue({
       connect: jest.fn(),
       connectors: mockConnectors,
       error: null,
-      isLoading: true,
-      pendingConnector: mockPendingConnector,
+      isPending: true,
     });
 
     // Mock the behavior of useDisconnect
@@ -39,13 +37,11 @@ describe('useWalletConnect', () => {
     expect(result.current.connectors).toEqual([
       {
         connecting: true,
-        disabled: false,
         id: 'metamask',
         name: 'MetaMask',
       },
       {
-        connecting: false,
-        disabled: false,
+        connecting: true,
         id: 'wallet-connect',
         name: 'WalletConnect',
       },
@@ -60,8 +56,7 @@ describe('useWalletConnect', () => {
       connect: jest.fn(),
       connectors: [],
       error: null,
-      isLoading: false,
-      pendingConnector: null,
+      isPending: false,
     });
 
     // Mock the behavior of useDisconnect

@@ -15,7 +15,7 @@ export type UseWalletAccountResult = {
 export const useWalletAccount = (): UseWalletAccountResult => {
   const { address, connector, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
-  const { data: ensAvatar } = useEnsAvatar({ name: ensName });
+  const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
   const { disconnect } = useDisconnect();
   return {
     address,

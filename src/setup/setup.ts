@@ -1,10 +1,6 @@
-import { configureChains, Connector, createConfig } from 'wagmi';
+import { createConfig, CreateConnectorFn, http } from 'wagmi';
 import { goerli, mainnet } from 'wagmi/chains';
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { publicProvider } from 'wagmi/providers/public';
+import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
 
 import {
   CoinbaseWalletConfig,
@@ -30,21 +26,7 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
     defaultChains.push(goerli);
   }
 
-  // Configure chains & providers with the Alchemy provider.
-  // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
-  const { chains, publicClient, webSocketPublicClient } = configureChains(defaultChains, [
-    publicProvider(),
-  ]);
-
-  const connectors: Connector[] = [
-    new InjectedConnector({
-      chains,
-      options: {
-        name: 'Injected',
-        shimDisconnect: true,
-      },
-    }),
-  ];
+  const connectors: CreateConnectorFn[] = [];
   const metamaskConfig = supportedWallets.find(
     (sW) => sW.type === 'metamask',
   ) as MetaMaskWalletConfig;
@@ -56,35 +38,31 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
   ) as WalletConnectWalletConfig;
 
   if (metamaskConfig) {
-    connectors.push(new MetaMaskConnector({ chains }));
+    connectors.push(injected({ target: 'metaMask' }));
   }
 
   if (coinbaseConfig) {
     connectors.push(
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: coinbaseConfig.appName,
-        },
+      coinbaseWallet({
+        appName: coinbaseConfig.appName,
       }),
     );
   }
 
   if (walletConnectConfig) {
     connectors.push(
-      new WalletConnectConnector({
-        chains,
-        options: {
-          projectId: walletConnectConfig.projectId,
-        },
+      walletConnect({
+        projectId: walletConnectConfig.projectId,
       }),
     );
   }
-
   return createConfig({
-    autoConnect: true,
+    chains: [mainnet, goerli],
     connectors,
-    publicClient,
-    webSocketPublicClient,
-  }) as ReturnType<typeof createConfig>;
+    multiInjectedProviderDiscovery: false,
+    transports: {
+      [mainnet.id]: http(),
+      [goerli.id]: http(),
+    },
+  });
 };
