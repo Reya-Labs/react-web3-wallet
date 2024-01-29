@@ -17,12 +17,16 @@ const WalletButtons: React.FunctionComponent = () => {
   const { getConnectorsReadiness, connect, connectors, error } = useWalletConnect();
   const { disconnect, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
   const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});
+  const connectorsLength = connectors.length;
   React.useEffect(() => {
+    if (connectorsLength === 0) {
+      return;
+    }
     (async () => {
       const readinessResult = await getConnectorsReadiness();
       setReadiness(readinessResult);
     })();
-  }, [connectors, setReadiness]);
+  }, [connectorsLength, setReadiness]);
 
   if (isConnected) {
     return (
