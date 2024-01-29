@@ -1,4 +1,7 @@
+import { ethers } from 'ethers';
 import { Connector, useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
+
+import { useEthersSigner } from './useEthersSigner';
 
 export type UseWalletAccountResult = {
   address: string | undefined;
@@ -10,6 +13,7 @@ export type UseWalletAccountResult = {
   ensAvatar: string | null | undefined;
   ensName: string | null | undefined;
   isConnected: boolean;
+  signer: null | ethers.JsonRpcSigner;
 };
 
 export const useWalletAccount = (): UseWalletAccountResult => {
@@ -17,6 +21,7 @@ export const useWalletAccount = (): UseWalletAccountResult => {
   const { data: ensName } = useEnsName({ address });
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
   const { disconnect } = useDisconnect();
+  const signer = useEthersSigner();
   return {
     address,
     connector:
@@ -30,5 +35,6 @@ export const useWalletAccount = (): UseWalletAccountResult => {
     ensAvatar,
     ensName,
     isConnected,
+    signer,
   };
 };

@@ -7,6 +7,7 @@ import { useWalletAccount } from './useWalletAccount';
 // Mock the 'wagmi' dependency
 jest.mock('wagmi', () => ({
   useAccount: jest.fn(),
+  useConnectorClient: jest.fn(() => ({})),
   useDisconnect: jest.fn(),
   useEnsAvatar: jest.fn(),
   useEnsName: jest.fn(),
@@ -27,7 +28,6 @@ describe('useWalletAccount', () => {
     });
     (useEnsName as jest.Mock).mockReturnValue({ data: 'example.eth' });
     (useEnsAvatar as jest.Mock).mockReturnValue({ data: 'avatar-url' });
-
     // Render the hook
     const { result } = renderHook(() => useWalletAccount());
 
