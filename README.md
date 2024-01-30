@@ -24,7 +24,7 @@ Library that takes care of connecting to different web3 wallets.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-37.93%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-52.63%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-42.85%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-36.36%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-43.05%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-42.85%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-47.36%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-41.17%25-red.svg?style=flat) |
 
 # Installation
 
