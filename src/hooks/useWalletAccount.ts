@@ -13,8 +13,10 @@ export type UseWalletAccountResult = {
   ensAvatar: string | null | undefined;
   ensName: string | null | undefined;
   isConnected: boolean;
-  signer: null | ethers.JsonRpcSigner;
+  signer: WalletSigner;
 };
+
+export type WalletSigner = null | ethers.JsonRpcSigner;
 
 export const useWalletAccount = (): UseWalletAccountResult => {
   const { address, connector, isConnected } = useAccount();
