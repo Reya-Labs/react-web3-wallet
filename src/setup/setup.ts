@@ -1,5 +1,5 @@
 import { createConfig, CreateConnectorFn, http } from 'wagmi';
-import { goerli, mainnet } from 'wagmi/chains';
+import { goerli, mainnet, polygonMumbai } from 'wagmi/chains';
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
 
 import {
@@ -10,6 +10,8 @@ import {
 } from './types';
 import { validateSetupParams } from './validate-setup-params';
 
+type CreateConfigParams = Parameters<typeof createConfig>[0];
+
 export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
   const validationResult = validateSetupParams(params);
   if (!validationResult.valid) {
@@ -18,12 +20,19 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
 
   const { supportedChains = [], supportedWallets = [] } = params;
 
-  const defaultChains = [];
+  const chains: CreateConfigParams['chains'][number][] = [];
+  const transports: CreateConfigParams['transports'] = {};
   if (supportedChains.includes('mainnet')) {
-    defaultChains.push(mainnet);
+    chains.push(mainnet);
+    transports[mainnet.id] = http();
   }
   if (supportedChains.includes('goerli')) {
-    defaultChains.push(goerli);
+    chains.push(goerli);
+    transports[goerli.id] = http();
+  }
+  if (supportedChains.includes('polygonMumbai')) {
+    chains.push(polygonMumbai);
+    transports[polygonMumbai.id] = http();
   }
 
   const connectors: CreateConnectorFn[] = [];
@@ -56,13 +65,13 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
       }),
     );
   }
+
   return createConfig({
-    chains: [mainnet, goerli],
+    // @ts-ignore - wagmi has some issue with types
+    chains,
     connectors,
     multiInjectedProviderDiscovery: false,
-    transports: {
-      [mainnet.id]: http(),
-      [goerli.id]: http(),
-    },
+    // @ts-ignore - wagmi has some issue with types
+    transports,
   });
 };

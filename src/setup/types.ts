@@ -1,8 +1,8 @@
 /**
  * Type representing supported Ethereum chains.
- * Currently supported chains are 'mainnet' and 'goerli'.
+ * Currently supported chains.
  */
-export type SupportedChains = 'mainnet' | 'goerli';
+export type SupportedChains = 'mainnet' | 'goerli' | 'polygonMumbai';
 
 /**
  * Configuration for the MetaMask wallet.
