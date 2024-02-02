@@ -1,8 +1,14 @@
+export enum SupportedWalletChainIds {
+  mainnet = 1,
+  goerli = 5,
+  polygonMumbai = 80001,
+}
+
 /**
  * Type representing supported Ethereum chains.
  * Currently supported chains.
  */
-export type SupportedChains = 'mainnet' | 'goerli' | 'polygonMumbai';
+export type SupportedChains = SupportedWalletChainIds;
 
 /**
  * Configuration for the MetaMask wallet.

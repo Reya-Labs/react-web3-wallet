@@ -22,15 +22,15 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
 
   const chains: CreateConfigParams['chains'][number][] = [];
   const transports: CreateConfigParams['transports'] = {};
-  if (supportedChains.includes('mainnet')) {
+  if (supportedChains.includes(mainnet.id)) {
     chains.push(mainnet);
     transports[mainnet.id] = http();
   }
-  if (supportedChains.includes('goerli')) {
+  if (supportedChains.includes(goerli.id)) {
     chains.push(goerli);
     transports[goerli.id] = http();
   }
-  if (supportedChains.includes('polygonMumbai')) {
+  if (supportedChains.includes(polygonMumbai.id)) {
     chains.push(polygonMumbai);
     transports[polygonMumbai.id] = http();
   }

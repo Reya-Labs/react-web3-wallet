@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 
 import { useWalletAccount } from '../../hooks/useWalletAccount';
 import { ConnectorReadiness, useWalletConnect } from '../../hooks/useWalletConnect';
-import { setup, SetupParams } from '../../setup';
+import { setup, SetupParams, SupportedWalletChainIds } from '../../setup';
 import { WalletConfig } from '.';
 
 export default {
@@ -86,7 +86,7 @@ const Template: StoryFn<{
   const config = useMemo(
     () =>
       setup({
-        supportedChains: ['mainnet', 'goerli'],
+        supportedChains: [SupportedWalletChainIds.mainnet, SupportedWalletChainIds.goerli],
         supportedWallets,
       }),
     [supportedWallets],

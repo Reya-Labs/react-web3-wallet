@@ -1,10 +1,10 @@
-import { SetupParams } from './types';
+import { SetupParams, SupportedWalletChainIds } from './types';
 import { validateSetupParams } from './validate-setup-params';
 
 describe('validateSetupParams', () => {
   it('should validate correctly with valid parameters', () => {
     const params: SetupParams = {
-      supportedChains: ['mainnet', 'goerli'],
+      supportedChains: [SupportedWalletChainIds.mainnet, SupportedWalletChainIds.goerli],
       supportedWallets: [{ type: 'metamask' }],
     };
     const result = validateSetupParams(params);
@@ -22,7 +22,7 @@ describe('validateSetupParams', () => {
 
   it('should return an error if supportedWallets is empty', () => {
     const params: SetupParams = {
-      supportedChains: ['mainnet', 'goerli'],
+      supportedChains: [SupportedWalletChainIds.mainnet, SupportedWalletChainIds.goerli],
       supportedWallets: [],
     };
     const result = validateSetupParams(params);
