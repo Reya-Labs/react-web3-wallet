@@ -86,13 +86,17 @@ const Template: StoryFn<{
   const config = useMemo(
     () =>
       setup({
-        supportedChains: [SupportedWalletChainIds.mainnet, SupportedWalletChainIds.goerli],
+        supportedChains: [
+          SupportedWalletChainIds.mainnet,
+          SupportedWalletChainIds.goerli,
+          SupportedWalletChainIds.reyaCronos,
+        ],
         supportedWallets,
       }),
     [supportedWallets],
   );
   return (
-    <ThemeProvider theme="voltz">
+    <ThemeProvider theme="reya">
       <WalletConfig key={supportedWallets.map((sW) => sW.type).join(',')} config={config}>
         <WalletButtons />
       </WalletConfig>

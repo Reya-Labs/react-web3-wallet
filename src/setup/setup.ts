@@ -2,6 +2,7 @@ import { createConfig, CreateConnectorFn, http } from 'wagmi';
 import { goerli, mainnet, polygonMumbai } from 'wagmi/chains';
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
 
+import { reyaCronos } from './reyaCronos';
 import {
   CoinbaseWalletConfig,
   MetaMaskWalletConfig,
@@ -33,6 +34,10 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
   if (supportedChains.includes(polygonMumbai.id)) {
     chains.push(polygonMumbai);
     transports[polygonMumbai.id] = http();
+  }
+  if (supportedChains.includes(reyaCronos.id)) {
+    chains.push(reyaCronos);
+    transports[reyaCronos.id] = http();
   }
 
   const connectors: CreateConnectorFn[] = [];
