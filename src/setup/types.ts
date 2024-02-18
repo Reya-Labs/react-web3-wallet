@@ -3,6 +3,7 @@ export enum SupportedWalletChainIds {
   goerli = 5,
   polygonMumbai = 80001,
   reyaCronos = 1729,
+  sepolia = 11155111,
 }
 
 /**
