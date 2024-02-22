@@ -15,16 +15,27 @@ export type UseWalletConnectResult = {
   getConnectorsReadiness: () => Promise<ConnectorReadiness>;
 };
 
-export const useWalletConnect = (): UseWalletConnectResult => {
+export type UseWalletConnectParams = {
+  onConnectSuccess?: () => void;
+  onDisconnectSuccess?: () => void;
+  onConnectError?: () => void;
+  onDisconnectError?: () => void;
+};
+
+export const useWalletConnect = (params?: UseWalletConnectParams): UseWalletConnectResult => {
   const { connect, connectors, error, isPending } = useConnect();
   const { disconnect } = useDisconnect();
-
+  const { onConnectSuccess, onConnectError, onDisconnectSuccess, onDisconnectError } = params || {};
   const handleConnect = (connectorId: Connector['id']) => {
     const connectTo = connectors.find((c) => c.id === connectorId);
     if (!connectTo) {
       return;
     }
-    connect({ connector: connectTo });
+    connect({ connector: connectTo }, { onError: onConnectError, onSuccess: onConnectSuccess });
+  };
+
+  const handleDisconnectConnect = () => {
+    disconnect(undefined, { onError: onDisconnectError, onSuccess: onDisconnectSuccess });
   };
 
   return {
@@ -34,7 +45,7 @@ export const useWalletConnect = (): UseWalletConnectResult => {
       id: connector.id,
       name: connector.name,
     })),
-    disconnect,
+    disconnect: handleDisconnectConnect,
     error,
     getConnectorsReadiness: async () => {
       const readiness: Record<Connector['id'], boolean> = {};
