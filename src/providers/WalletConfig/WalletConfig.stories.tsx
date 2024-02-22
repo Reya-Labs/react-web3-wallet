@@ -14,8 +14,8 @@ export default {
 } as Meta<typeof WalletConfig>;
 
 const WalletButtons: React.FunctionComponent = () => {
-  const { getConnectorsReadiness, connect, connectors, error } = useWalletConnect();
-  const { disconnect, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
+  const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect();
+  const { ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
   const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});
   const connectorsLength = connectors.length;
   React.useEffect(() => {
