@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { Connector, useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
+import { Connector, useAccount, useEnsAvatar, useEnsName } from 'wagmi';
 
 import { useEthersSigner } from './useEthersSigner';
 
@@ -9,7 +9,6 @@ export type UseWalletAccountResult = {
     id: Connector['id'];
     name: Connector['name'];
   } | null;
-  disconnect: () => void;
   ensAvatar: string | null | undefined;
   ensName: string | null | undefined;
   isConnected: boolean;
@@ -22,7 +21,6 @@ export const useWalletAccount = (): UseWalletAccountResult => {
   const { address, connector, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
-  const { disconnect } = useDisconnect();
   const signer = useEthersSigner();
   return {
     address,
@@ -33,7 +31,6 @@ export const useWalletAccount = (): UseWalletAccountResult => {
             name: connector.name,
           }
         : null,
-    disconnect,
     ensAvatar,
     ensName,
     isConnected,
