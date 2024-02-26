@@ -2,7 +2,7 @@ import { defineChain } from 'viem';
 
 export const reyaCronos = defineChain({
   blockExplorers: {
-    default: { name: 'ReyaCronosScan', url: 'https://explorer.reya-cronos.gelato.digital' },
+    default: { name: 'ReyaCronosScan', url: 'https://reya-cronos.blockscout.com' },
   },
   id: 1729,
   name: 'Reya Cronos',
