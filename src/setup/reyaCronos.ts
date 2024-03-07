@@ -4,7 +4,7 @@ export const reyaCronos = defineChain({
   blockExplorers: {
     default: { name: 'ReyaCronosScan', url: 'https://reya-cronos.blockscout.com' },
   },
-  id: 1729,
+  id: 89346161,
   name: 'Reya Cronos',
   nativeCurrency: { decimals: 18, name: 'Ether', symbol: 'ETH' },
   rpcUrls: {

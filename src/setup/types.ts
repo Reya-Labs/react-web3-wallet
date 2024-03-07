@@ -2,7 +2,7 @@ export enum SupportedWalletChainIds {
   mainnet = 1,
   goerli = 5,
   polygonMumbai = 80001,
-  reyaCronos = 1729,
+  reyaCronos = 89346161,
   sepolia = 11155111,
 }
 
