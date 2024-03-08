@@ -15,7 +15,7 @@ export default {
 
 const WalletButtons: React.FunctionComponent = () => {
   const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect();
-  const { ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
+  const { signer, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
   const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});
   const connectorsLength = connectors.length;
   React.useEffect(() => {
@@ -37,6 +37,9 @@ const WalletButtons: React.FunctionComponent = () => {
         </Typography>
         <Typography colorToken="white100" typographyToken="primaryBodySmallRegular">
           Connected to {connector?.name}{' '}
+        </Typography>
+        <Typography colorToken="white100" typographyToken="primaryBodySmallRegular">
+          Signer status: {!signer ? 'No signer' : 'Have signer'}
         </Typography>
         <Button variant="secondary" onClick={disconnect}>
           Disconnect
