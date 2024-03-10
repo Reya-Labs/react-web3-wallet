@@ -1,8 +1,7 @@
 import { createConfig, CreateConnectorFn, http } from 'wagmi';
-import { goerli, mainnet, polygonMumbai, sepolia } from 'wagmi/chains';
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
 
-import { reyaCronos } from './reyaCronos';
+import { getChainDefinition } from './get-chain-definition';
 import {
   CoinbaseWalletConfig,
   MetaMaskWalletConfig,
@@ -23,25 +22,12 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
 
   const chains: CreateConfigParams['chains'][number][] = [];
   const transports: CreateConfigParams['transports'] = {};
-  if (supportedChains.includes(mainnet.id)) {
-    chains.push(mainnet);
-    transports[mainnet.id] = http();
-  }
-  if (supportedChains.includes(goerli.id)) {
-    chains.push(goerli);
-    transports[goerli.id] = http();
-  }
-  if (supportedChains.includes(polygonMumbai.id)) {
-    chains.push(polygonMumbai);
-    transports[polygonMumbai.id] = http();
-  }
-  if (supportedChains.includes(reyaCronos.id)) {
-    chains.push(reyaCronos);
-    transports[reyaCronos.id] = http();
-  }
-  if (supportedChains.includes(sepolia.id)) {
-    chains.push(sepolia);
-    transports[sepolia.id] = http();
+  for (const supportedChain of supportedChains) {
+    const chain = getChainDefinition(supportedChain);
+    if (chain) {
+      chains.push(chain);
+      transports[chain.id] = http();
+    }
   }
 
   const connectors: CreateConnectorFn[] = [];

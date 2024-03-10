@@ -1,5 +1,13 @@
-import { SetupParams, SupportedWalletChainIds } from './types';
+import { SetupParams } from './types';
 import { validateSetupParams } from './validate-setup-params';
+
+enum SupportedWalletChainIds {
+  mainnet = 1,
+  goerli = 5,
+  polygonMumbai = 80001,
+  reyaCronos = 89346161,
+  sepolia = 11155111,
+}
 
 describe('validateSetupParams', () => {
   it('should validate correctly with valid parameters', () => {

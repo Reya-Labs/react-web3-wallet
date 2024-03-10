@@ -1,17 +1,3 @@
-export enum SupportedWalletChainIds {
-  mainnet = 1,
-  goerli = 5,
-  polygonMumbai = 80001,
-  reyaCronos = 89346161,
-  sepolia = 11155111,
-}
-
-/**
- * Type representing supported Ethereum chains.
- * Currently supported chains.
- */
-export type SupportedChains = SupportedWalletChainIds;
-
 /**
  * Configuration for the MetaMask wallet.
  */
@@ -52,6 +38,6 @@ export type SupportedWallets =
  * @param supportedWallets - An array of supported wallet configurations.
  */
 export type SetupParams = {
-  supportedChains: SupportedChains[];
+  supportedChains: number[];
   supportedWallets: SupportedWallets[];
 };

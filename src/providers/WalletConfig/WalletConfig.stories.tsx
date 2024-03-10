@@ -4,8 +4,16 @@ import React, { useMemo } from 'react';
 
 import { useWalletAccount } from '../../hooks/useWalletAccount';
 import { ConnectorReadiness, useWalletConnect } from '../../hooks/useWalletConnect';
-import { setup, SetupParams, SupportedWalletChainIds } from '../../setup';
+import { setup, SetupParams } from '../../setup';
 import { WalletConfig } from '.';
+
+enum SupportedWalletChainIds {
+  mainnet = 1,
+  goerli = 5,
+  polygonMumbai = 80001,
+  reyaCronos = 89346161,
+  sepolia = 11155111,
+}
 
 export default {
   args: {},
