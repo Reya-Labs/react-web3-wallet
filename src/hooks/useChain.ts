@@ -1,9 +1,9 @@
-import { useChainId, useSwitchChain } from 'wagmi';
+import { useAccount, useSwitchChain } from 'wagmi';
 
 import { parseWagmiError } from '../utils/extract-error';
 
 type UseChainResult = {
-  chainId: number;
+  chainId: number | undefined;
   isErrorSwitching: boolean;
   isSwitching: boolean;
   switchChain: (id: number) => void;
@@ -12,7 +12,7 @@ type UseChainResult = {
 
 export const useChain = (): UseChainResult => {
   const { switchChain, error, isError, isPending } = useSwitchChain();
-  const chainId = useChainId();
+  const { chainId } = useAccount();
   const handleSwitchChain = (id: number) => {
     switchChain({ chainId: id });
   };

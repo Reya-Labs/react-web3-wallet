@@ -1,11 +1,18 @@
+import styled from '@emotion/styled';
 import { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { Button, ThemeProvider, Typography } from 'brokoli-ui';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
-import { useWalletAccount } from '../../hooks/useWalletAccount';
-import { ConnectorReadiness, useWalletConnect } from '../../hooks/useWalletConnect';
-import { setup, SetupParams } from '../../setup';
-import { WalletConfig } from '.';
+import {
+  ConnectorReadiness,
+  setup,
+  SetupParams,
+  useChain,
+  useWalletAccount,
+  useWalletConnect,
+  WalletConfig,
+} from '../../index';
+import { extractError } from '../../utils/extract-error';
 
 enum SupportedWalletChainIds {
   mainnet = 1,
@@ -21,12 +28,22 @@ export default {
   title: 'Components/WalletConfig',
 } as Meta<typeof WalletConfig>;
 
+const ButtonsBox = styled('div')`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
 const WalletButtons: React.FunctionComponent = () => {
   const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect();
   const { signer, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
+  const { chainId, isErrorSwitching, error: errorSwitching, isSwitching, switchChain } = useChain();
   const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});
   const connectorsLength = connectors.length;
-  React.useEffect(() => {
+  const requiredChainId = SupportedWalletChainIds.mainnet;
+  const shouldSwitchNetwork = chainId !== requiredChainId;
+
+  useEffect(() => {
     if (connectorsLength === 0) {
       return;
     }
@@ -40,18 +57,42 @@ const WalletButtons: React.FunctionComponent = () => {
     return (
       <div>
         <img alt="ENS Avatar" src={ensAvatar!} />
-        <Typography colorToken="white100" typographyToken="primaryBodyMediumRegular">
+        <Typography colorToken="white100" typographyToken="bodyMediumRegular">
           {ensName ? `${ensName} (${address!})` : address}
         </Typography>
-        <Typography colorToken="white100" typographyToken="primaryBodySmallRegular">
+        <Typography colorToken="white100" typographyToken="bodySmallRegular">
           Connected to {connector?.name}{' '}
         </Typography>
-        <Typography colorToken="white100" typographyToken="primaryBodySmallRegular">
+        <Typography colorToken="white100" typographyToken="bodySmallRegular">
           Signer status: {!signer ? 'No signer' : 'Have signer'}
         </Typography>
-        <Button variant="secondary" onClick={disconnect}>
-          Disconnect
-        </Button>
+        <Typography colorToken="white100" typographyToken="bodySmallRegular">
+          Wagmi chain: {chainId}
+        </Typography>
+        <ButtonsBox>
+          <Button
+            backgroundColorToken="black800"
+            typographyColorToken="white500"
+            typographyToken="bodyMediumRegular"
+            onClick={disconnect}
+          >
+            Disconnect
+          </Button>
+          <Button
+            backgroundColorToken={shouldSwitchNetwork ? 'warning500' : 'primary800'}
+            bottomLeftText={isErrorSwitching ? extractError(errorSwitching) : undefined}
+            bottomLeftTextColorToken="error500"
+            bottomLeftTextTypographyToken="bodyXSmallRegular"
+            loading={isSwitching}
+            typographyColorToken={shouldSwitchNetwork ? 'warning100' : 'primary500'}
+            typographyToken="bodyMediumRegular"
+            onClick={shouldSwitchNetwork ? () => switchChain(requiredChainId) : undefined}
+          >
+            {shouldSwitchNetwork
+              ? `Switch chain to mainnet, current chainId is ${chainId || 'unknown'}`
+              : 'You are on mainnet!'}
+          </Button>
+        </ButtonsBox>
       </div>
     );
   }
@@ -61,10 +102,13 @@ const WalletButtons: React.FunctionComponent = () => {
       {connectors.map((c) => (
         <Button
           key={c.id}
+          backgroundColorToken="primary950"
+          borderColorToken="primary800"
           bottomLeftText={error ? error.message : ''}
           bottomLeftTextColorToken="error100"
           disabled={!readiness[c.id]}
-          variant="primary"
+          hoverBorderColorToken="primary500"
+          typographyColorToken="primary500"
           onClick={() => connect(c.id)}
         >
           {c.name}
