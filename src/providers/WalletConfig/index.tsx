@@ -8,7 +8,7 @@ import { WagmiProvider, WagmiProviderProps } from 'wagmi';
 export type WalletConfigProps = React.PropsWithChildren<{
   /**
    * The configuration object obtained after calling the `setup` function
-   * from `@voltz-protocol/react-web3-wallet`.
+   * from `@reyaxyz/react-web3-wallet`.
    */
   config: WagmiProviderProps['config'];
 }>;

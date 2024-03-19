@@ -66,7 +66,7 @@ Helpful tools to install to improve your development life!
 Make sure the package and peerDependencies are installed:
 
 ```shell
-yarn add @voltz-protocol/react-web3-wallet viem wagmi
+yarn add @reyaxyz/react-web3-wallet viem wagmi
 ```
 
 ## Step 1: Configuring Connectors
@@ -74,7 +74,7 @@ yarn add @voltz-protocol/react-web3-wallet viem wagmi
 First, we create a new config set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors.
 
 ```tsx
-import { setup, WalletConfig } from '@voltz-protocol/react-web3-wallet';
+import { setup, WalletConfig } from '@reyaxyz/react-web3-wallet';
 
 // Set up wagmi config
 const config = setup({
@@ -109,7 +109,7 @@ wrapping the `brokoli-ui` components
 ```tsx
 import { Button, ThemeProvider, Typography } from 'brokoli-ui';
 import React, { useMemo } from 'react';
-import { useWalletAccount, useWalletConnect } from '@voltz-protocol/react-web3-wallet';
+import { useWalletAccount, useWalletConnect } from '@reyaxyz/react-web3-wallet';
 
 // Pass config to React Context Provider
 function Profile() {
