@@ -1,5 +1,5 @@
 {
-  "name": "@voltz-protocol/react-web3-wallet",
+  "name": "@reyaxyz/react-web3-wallet",
   "version": "2.15.1",
   "description": "Library that takes care of connecting to different web3 wallets.",
   "main": "dist/esm/index.js",
