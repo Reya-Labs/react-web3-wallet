@@ -1,19 +1,19 @@
 # react-web3-wallet
 
 <p align="center">
-  <a href="https://app.voltz.xyz/">
+  <a href="https://app.reya.xyz/">
     <picture>
-      <img src="./docs/logo.png" alt="Voltz" width="128" />
+      <img src="./docs/logo.png" alt="Reya" width="128" />
     </picture>
   </a>
 </p>
 
-<p align="center">Powering Voltz UI and beyond!!!</p>
+<p align="center">Powering Reya and beyond!!!</p>
 
 <p align="center">
-  <img src="https://badgen.net/github/tag/Voltz-Protocol/react-web3-wallet" alt="Tag" />
-  <img src="https://badgen.net/github/checks/Voltz-Protocol/react-web3-wallet/main" alt="Checks" />
-  <img src="https://badgen.net/github/last-commit/Voltz-Protocol/react-web3-wallet/main" alt="Checks" />
+  <img src="https://badgen.net/github/tag/Reya-Labs/react-web3-wallet" alt="Tag" />
+  <img src="https://badgen.net/github/checks/Reya-Labs/react-web3-wallet/main" alt="Checks" />
+  <img src="https://badgen.net/github/last-commit/Reya-Labs/react-web3-wallet/main" alt="Checks" />
 </p>
 
 <p align="center">

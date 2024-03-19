@@ -37,14 +37,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Voltz-Protocol/react-web3-wallet.git"
+    "url": "git+https://github.com/Reya-Labs/react-web3-wallet.git"
   },
   "author": "ssbarbee",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Voltz-Protocol/react-web3-wallet/issues"
+    "url": "https://github.com/Reya-Labs/react-web3-wallet/issues"
   },
-  "homepage": "https://github.com/Voltz-Protocol/react-web3-wallet#readme",
+  "homepage": "https://github.com/Reya-Labs/react-web3-wallet#readme",
   "devDependencies": {
     "@babel/core": "7.20.12",
     "@babel/preset-env": "7.23.3",
