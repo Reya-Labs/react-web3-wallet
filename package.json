@@ -207,5 +207,9 @@
     "node": ">= 16.17.0",
     "npm": "please-use-yarn"
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.1.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
