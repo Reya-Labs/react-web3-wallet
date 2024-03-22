@@ -7,6 +7,7 @@ import {
   ConnectorReadiness,
   setup,
   SetupParams,
+  useAutoSwitchChain,
   useChain,
   useWalletAccount,
   useWalletConnect,
@@ -37,11 +38,9 @@ const ButtonsBox = styled('div')`
 const WalletButtons: React.FunctionComponent = () => {
   const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect();
   const { signer, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
-  const { chainId, isErrorSwitching, error: errorSwitching, isSwitching, switchChain } = useChain();
+  const { chainId } = useChain();
   const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});
   const connectorsLength = connectors.length;
-  const requiredChainId = SupportedWalletChainIds.mainnet;
-  const shouldSwitchNetwork = chainId !== requiredChainId;
 
   useEffect(() => {
     if (connectorsLength === 0) {
@@ -78,20 +77,6 @@ const WalletButtons: React.FunctionComponent = () => {
           >
             Disconnect
           </Button>
-          <Button
-            backgroundColorToken={shouldSwitchNetwork ? 'warning500' : 'primary800'}
-            bottomLeftText={isErrorSwitching ? extractError(errorSwitching) : undefined}
-            bottomLeftTextColorToken="error500"
-            bottomLeftTextTypographyToken="bodyXSmallRegular"
-            loading={isSwitching}
-            typographyColorToken={shouldSwitchNetwork ? 'warning100' : 'primary500'}
-            typographyToken="bodyMediumRegular"
-            onClick={shouldSwitchNetwork ? () => switchChain(requiredChainId) : undefined}
-          >
-            {shouldSwitchNetwork
-              ? `Switch chain to mainnet, current chainId is ${chainId || 'unknown'}`
-              : 'You are on mainnet!'}
-          </Button>
         </ButtonsBox>
       </div>
     );
@@ -119,10 +104,85 @@ const WalletButtons: React.FunctionComponent = () => {
   );
 };
 
+const ChainButton: React.FunctionComponent = () => {
+  const { chainId, isErrorSwitching, error: errorSwitching, isSwitching, switchChain } = useChain();
+  const requiredChainId = SupportedWalletChainIds.mainnet;
+  const shouldSwitchNetwork = chainId !== requiredChainId;
+  const { isConnected } = useWalletAccount();
+
+  if (isConnected) {
+    return (
+      <div>
+        <ButtonsBox>
+          <Button
+            backgroundColorToken={shouldSwitchNetwork ? 'warning500' : 'primary800'}
+            bottomLeftText={isErrorSwitching ? extractError(errorSwitching) : undefined}
+            bottomLeftTextColorToken="error500"
+            bottomLeftTextTypographyToken="bodyXSmallRegular"
+            loading={isSwitching}
+            typographyColorToken={shouldSwitchNetwork ? 'warning100' : 'primary500'}
+            typographyToken="bodyMediumRegular"
+            onClick={shouldSwitchNetwork ? () => switchChain(requiredChainId) : undefined}
+          >
+            {shouldSwitchNetwork
+              ? `Switch chain to mainnet, current chainId is ${chainId || 'unknown'}`
+              : 'You are on mainnet!'}
+          </Button>
+        </ButtonsBox>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+const AutoSwitchChainButton: React.FunctionComponent<{ switchToChainId?: number }> = ({
+  switchToChainId,
+}) => {
+  const {
+    chainId,
+    isErrorSwitching,
+    error: errorSwitching,
+    isSwitching,
+    switchChain,
+  } = useAutoSwitchChain(switchToChainId);
+  const { isConnected } = useWalletAccount();
+
+  if (isConnected && switchToChainId) {
+    const requiredChainId = switchToChainId;
+    const shouldSwitchNetwork = chainId !== requiredChainId;
+    return (
+      <div>
+        <ButtonsBox>
+          <Button
+            backgroundColorToken={shouldSwitchNetwork ? 'secondary500' : 'primary800'}
+            bottomLeftText={isErrorSwitching ? extractError(errorSwitching) : undefined}
+            bottomLeftTextColorToken="error500"
+            bottomLeftTextTypographyToken="bodyXSmallRegular"
+            loading={isSwitching}
+            typographyColorToken={shouldSwitchNetwork ? 'secondary100' : 'primary500'}
+            typographyToken="bodyMediumRegular"
+            onClick={shouldSwitchNetwork ? () => switchChain(requiredChainId) : undefined}
+          >
+            {shouldSwitchNetwork
+              ? `I am forcing switch to ${
+                  switchToChainId || ''
+                } when rendered, current chainId is ${chainId || 'unknown'}`
+              : `You have switched to ${switchToChainId}`}
+          </Button>
+        </ButtonsBox>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 const Template: StoryFn<{
   coinBaseAppName: string;
   walletConnectProjectId: string;
-}> = ({ coinBaseAppName, walletConnectProjectId }) => {
+  switchToChainId?: number;
+}> = ({ switchToChainId, coinBaseAppName, walletConnectProjectId }) => {
   const supportedWallets = useMemo(() => {
     const value: SetupParams['supportedWallets'] = [
       {
@@ -141,11 +201,7 @@ const Template: StoryFn<{
   const config = useMemo(
     () =>
       setup({
-        supportedChains: [
-          SupportedWalletChainIds.mainnet,
-          SupportedWalletChainIds.goerli,
-          SupportedWalletChainIds.reyaCronos,
-        ],
+        supportedChains: Object.values(SupportedWalletChainIds) as number[],
         supportedWallets,
       }),
     [supportedWallets],
@@ -154,6 +210,11 @@ const Template: StoryFn<{
     <ThemeProvider theme="reya">
       <WalletConfig key={supportedWallets.map((sW) => sW.type).join(',')} config={config}>
         <WalletButtons />
+        {!switchToChainId ? (
+          <ChainButton />
+        ) : (
+          <AutoSwitchChainButton switchToChainId={switchToChainId} />
+        )}
       </WalletConfig>
     </ThemeProvider>
   );
@@ -165,6 +226,19 @@ export const Default: StoryObj<{
 }> = {
   args: {
     coinBaseAppName: '',
+    walletConnectProjectId: '',
+  },
+  render: Template,
+};
+
+export const WithAutoSwitchChain: StoryObj<{
+  coinBaseAppName: string;
+  walletConnectProjectId: string;
+  switchToChainId: number;
+}> = {
+  args: {
+    coinBaseAppName: '',
+    switchToChainId: SupportedWalletChainIds.sepolia,
     walletConnectProjectId: '',
   },
   render: Template,
