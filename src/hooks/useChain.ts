@@ -2,7 +2,7 @@ import { useAccount, useSwitchChain } from 'wagmi';
 
 import { parseWagmiError } from '../utils/extract-error';
 
-type UseChainResult = {
+export type UseChainResult = {
   chainId: number | undefined;
   isErrorSwitching: boolean;
   isSwitching: boolean;
