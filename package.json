@@ -21,6 +21,7 @@
     "prebuild:storybook": "yarn code-quality:check && rm -rf storybook-static",
     "build:storybook": "yarn prebuild:storybook && storybook build",
     "storybook": "storybook dev -p 6006",
+    "dev": "yarn storybook",
     "ts:check": "yarn ts:check-types && yarn ts:circular-check",
     "ts:check-types": "tsc --noEmit",
     "ts:circular-check": "dpdm --no-output --no-tree --no-warning --exit-code circular:1 -T ./src/index.ts",
