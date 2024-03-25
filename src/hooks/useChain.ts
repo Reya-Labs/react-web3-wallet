@@ -21,7 +21,7 @@ export const useChain = (): UseChainResult => {
       }
       switchChain({ chainId: id });
     },
-    [switchChain],
+    [chainId, switchChain],
   );
 
   return {
