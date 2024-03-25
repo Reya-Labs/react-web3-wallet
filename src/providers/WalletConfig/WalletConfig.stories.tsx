@@ -7,7 +7,6 @@ import {
   ConnectorReadiness,
   setup,
   SetupParams,
-  useAutoSwitchChain,
   useChain,
   useWalletAccount,
   useWalletConnect,
@@ -136,53 +135,10 @@ const ChainButton: React.FunctionComponent = () => {
   return null;
 };
 
-const AutoSwitchChainButton: React.FunctionComponent<{ switchToChainId?: number }> = ({
-  switchToChainId,
-}) => {
-  const {
-    chainId,
-    isErrorSwitching,
-    error: errorSwitching,
-    isSwitching,
-    switchChain,
-  } = useAutoSwitchChain(switchToChainId);
-  const { isConnected } = useWalletAccount();
-
-  if (isConnected && switchToChainId) {
-    const requiredChainId = switchToChainId;
-    const shouldSwitchNetwork = chainId !== requiredChainId;
-    return (
-      <div>
-        <ButtonsBox>
-          <Button
-            backgroundColorToken={shouldSwitchNetwork ? 'secondary500' : 'primary800'}
-            bottomLeftText={isErrorSwitching ? extractError(errorSwitching) : undefined}
-            bottomLeftTextColorToken="error500"
-            bottomLeftTextTypographyToken="bodyXSmallRegular"
-            loading={isSwitching}
-            typographyColorToken={shouldSwitchNetwork ? 'secondary100' : 'primary500'}
-            typographyToken="bodyMediumRegular"
-            onClick={shouldSwitchNetwork ? () => switchChain(requiredChainId) : undefined}
-          >
-            {shouldSwitchNetwork
-              ? `I am forcing switch to ${
-                  switchToChainId || ''
-                } when rendered, current chainId is ${chainId || 'unknown'}`
-              : `You have switched to ${switchToChainId}`}
-          </Button>
-        </ButtonsBox>
-      </div>
-    );
-  }
-
-  return null;
-};
-
 const Template: StoryFn<{
   coinBaseAppName: string;
   walletConnectProjectId: string;
-  switchToChainId?: number;
-}> = ({ switchToChainId, coinBaseAppName, walletConnectProjectId }) => {
+}> = ({ coinBaseAppName, walletConnectProjectId }) => {
   const supportedWallets = useMemo(() => {
     const value: SetupParams['supportedWallets'] = [
       {
@@ -210,11 +166,7 @@ const Template: StoryFn<{
     <ThemeProvider theme="reya">
       <WalletConfig key={supportedWallets.map((sW) => sW.type).join(',')} config={config}>
         <WalletButtons />
-        {!switchToChainId ? (
-          <ChainButton />
-        ) : (
-          <AutoSwitchChainButton switchToChainId={switchToChainId} />
-        )}
+        <ChainButton />
       </WalletConfig>
     </ThemeProvider>
   );
@@ -226,19 +178,6 @@ export const Default: StoryObj<{
 }> = {
   args: {
     coinBaseAppName: '',
-    walletConnectProjectId: '',
-  },
-  render: Template,
-};
-
-export const WithAutoSwitchChain: StoryObj<{
-  coinBaseAppName: string;
-  walletConnectProjectId: string;
-  switchToChainId: number;
-}> = {
-  args: {
-    coinBaseAppName: '',
-    switchToChainId: SupportedWalletChainIds.sepolia,
     walletConnectProjectId: '',
   },
   render: Template,

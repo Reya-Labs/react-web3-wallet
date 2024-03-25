@@ -14,7 +14,12 @@ export const extractError = (err: unknown): string => {
 
 const extractDetailsError = (str: string): string => {
   const match = str.match(/Details: (.+?)\n/);
-  return match ? match[1] || '' : '';
+  const matched = match ? match[1] || '' : '';
+
+  if (matched.indexOf('User rejected the request') !== -1) {
+    return 'Network switch was canceled by User.';
+  }
+  return matched;
 };
 
 export const parseWagmiError = (err: unknown): string => {
