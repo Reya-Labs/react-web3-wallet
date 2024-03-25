@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useAccount, useSwitchChain } from 'wagmi';
 
 import { parseWagmiError } from '../utils/extract-error';
@@ -13,9 +14,15 @@ export type UseChainResult = {
 export const useChain = (): UseChainResult => {
   const { switchChain, error, isError, isPending } = useSwitchChain();
   const { chainId } = useAccount();
-  const handleSwitchChain = (id: number) => {
-    switchChain({ chainId: id });
-  };
+  const handleSwitchChain = useCallback(
+    () => (id: number) => {
+      if (chainId === id) {
+        return;
+      }
+      switchChain({ chainId: id });
+    },
+    [switchChain],
+  );
 
   return {
     chainId,
