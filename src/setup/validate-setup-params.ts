@@ -1,6 +1,6 @@
 import { SetupParams } from './types';
 
-export function validateSetupParams(params: SetupParams): { valid: boolean; message?: string } {
+export function validateSetupParams(params: SetupParams): { message?: string, valid: boolean; } {
   // Check if supportedChains is not empty
   if (!params.supportedChains || params.supportedChains.length === 0) {
     return { message: 'supportedChains must not be empty', valid: false };

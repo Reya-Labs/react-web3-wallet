@@ -4,10 +4,10 @@ import { parseWagmiError } from '../utils/extract-error';
 
 export type UseChainResult = {
   chainId: number | undefined;
+  error: string | null;
   isErrorSwitching: boolean;
   isSwitching: boolean;
   switchChain: (id: number) => void;
-  error: string | null;
 };
 
 export const useChain = (): UseChainResult => {

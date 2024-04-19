@@ -11,15 +11,15 @@ export type UseWalletConnectResult = {
   }>;
   disconnect: () => void;
   error: Error | null;
-  isLoading: boolean;
   getConnectorsReadiness: () => Promise<ConnectorReadiness>;
+  isLoading: boolean;
 };
 
 export type UseWalletConnectParams = {
-  onConnectSuccess?: () => void;
-  onDisconnectSuccess?: () => void;
   onConnectError?: () => void;
+  onConnectSuccess?: () => void;
   onDisconnectError?: () => void;
+  onDisconnectSuccess?: () => void;
 };
 
 export const useWalletConnect = (params?: UseWalletConnectParams): UseWalletConnectResult => {

@@ -12,8 +12,8 @@ export type UseWalletAccountResult = {
   ensAvatar: string | null | undefined;
   ensName: string | null | undefined;
   isConnected: boolean;
-  signer: WalletSigner;
   isConnecting: boolean;
+  signer: WalletSigner;
 };
 
 export type WalletSigner = null | ethers.JsonRpcSigner;

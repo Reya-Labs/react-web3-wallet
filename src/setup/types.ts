@@ -10,8 +10,8 @@ export type MetaMaskWalletConfig = {
  * @param appName - The name of the app using the wallet.
  */
 export type CoinbaseWalletConfig = {
-  type: 'coinbase';
   appName: string;
+  type: 'coinbase';
 };
 
 /**
@@ -19,8 +19,8 @@ export type CoinbaseWalletConfig = {
  * @param projectId - The WalletConnect project ID.
  */
 export type WalletConnectWalletConfig = {
-  type: 'wallet-connect';
   projectId: string;
+  type: 'wallet-connect';
 };
 
 /**
