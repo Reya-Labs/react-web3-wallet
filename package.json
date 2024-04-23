@@ -213,5 +213,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@dynamic-labs/ethereum": "^2.0.1",
+    "@dynamic-labs/sdk-react-core": "^2.0.1",
+    "@dynamic-labs/wagmi-connector": "^2.0.1"
   }
 }

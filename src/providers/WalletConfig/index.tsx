@@ -1,6 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { WagmiProvider, WagmiProviderProps } from 'wagmi';
+import {
+  DynamicContextProvider,
+  DynamicWagmiConnector,
+  EthereumWalletConnectors,
+} from '../../setup/dynamic';
 
 /**
  * Props for configuring the wallet component.
@@ -17,8 +22,17 @@ const queryClient = new QueryClient();
 
 export const WalletConfig: React.FunctionComponent<WalletConfigProps> = ({ config, children }) => {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </WagmiProvider>
+    <DynamicContextProvider
+      settings={{
+        environmentId: '929f1445-6866-4eda-a025-b9e848d78092',
+        walletConnectors: [EthereumWalletConnectors],
+      }}
+    >
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <DynamicWagmiConnector>{children}</DynamicWagmiConnector>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </DynamicContextProvider>
   );
 };

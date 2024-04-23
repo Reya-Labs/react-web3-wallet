@@ -13,12 +13,13 @@ import {
   WalletConfig,
 } from '../../index';
 import { extractError } from '../../utils/extract-error';
+import { DynamicWidget } from '../../setup/dynamic';
 
 enum SupportedWalletChainIds {
   mainnet = 1,
   goerli = 5,
   polygonMumbai = 80001,
-  reyaCronos = 89346161,
+  // reyaCronos = 89346161,
   sepolia = 11155111,
 }
 
@@ -165,8 +166,7 @@ const Template: StoryFn<{
   return (
     <ThemeProvider theme="reya">
       <WalletConfig key={supportedWallets.map((sW) => sW.type).join(',')} config={config}>
-        <WalletButtons />
-        <ChainButton />
+        <DynamicWidget />
       </WalletConfig>
     </ThemeProvider>
   );
