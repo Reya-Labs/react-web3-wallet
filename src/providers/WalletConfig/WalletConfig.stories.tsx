@@ -144,6 +144,9 @@ const Template: StoryFn<{
       {
         type: 'metamask',
       },
+      {
+        type: 'rabby',
+      },
     ];
     if (walletConnectProjectId) {
       value.push({ projectId: walletConnectProjectId, type: 'wallet-connect' });
