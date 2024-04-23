@@ -34,6 +34,7 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
   const metamaskConfig = supportedWallets.find(
     (sW) => sW.type === 'metamask',
   ) as MetaMaskWalletConfig;
+  const rabbyConfig = supportedWallets.find((sW) => sW.type === 'rabby') as MetaMaskWalletConfig;
   const coinbaseConfig = supportedWallets.find(
     (sW) => sW.type === 'coinbase',
   ) as CoinbaseWalletConfig;
@@ -43,6 +44,10 @@ export const setup = (params: SetupParams): ReturnType<typeof createConfig> => {
 
   if (metamaskConfig) {
     connectors.push(injected({ target: 'metaMask' }));
+  }
+
+  if (rabbyConfig) {
+    connectors.push(injected({ target: 'rabby' }));
   }
 
   if (coinbaseConfig) {

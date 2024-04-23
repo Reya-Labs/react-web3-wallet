@@ -6,6 +6,13 @@ export type MetaMaskWalletConfig = {
 };
 
 /**
+ * Configuration for the Rabby wallet.
+ */
+export type RabbyWalletConfig = {
+  type: 'rabby';
+};
+
+/**
  * Configuration for the Coinbase wallet.
  * @param appName - The name of the app using the wallet.
  */
@@ -29,6 +36,7 @@ export type WalletConnectWalletConfig = {
  */
 export type SupportedWallets =
   | MetaMaskWalletConfig
+  | RabbyWalletConfig
   | CoinbaseWalletConfig
   | WalletConnectWalletConfig;
 
