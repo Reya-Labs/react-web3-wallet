@@ -22,41 +22,52 @@ export const useWalletConnect = (): UseWalletConnectResult => {
   const { disconnect } = useDisconnect();
   const { onConnectSuccess, onConnectError, onDisconnectSuccess, onDisconnectError } =
     useIntegratorProps();
+
+  const handleOnConnectError = (data: { message: string; name: string }) =>
+    typeof onConnectError === 'function'
+      ? onConnectError({
+          message: data.message,
+          name: data.name,
+        })
+      : undefined;
+
+  const handleOnConnectSuccess = (data: { accounts: readonly string[]; chainId: number }) => {
+    // eslint-disable-next-line
+    console.log('### handleOnConnectSuccess', data);
+    if (typeof onConnectSuccess === 'function') {
+      onConnectSuccess({
+        chainId: data.chainId,
+        walletAddress: data.accounts[0],
+      });
+    }
+  };
+
+  const handleOnDisconnectError = (data: { message: string; name: string }) =>
+    typeof onDisconnectError === 'function'
+      ? onDisconnectError({
+          message: data.message,
+          name: data.name,
+        })
+      : undefined;
+
   const handleConnect = (connectorId: Connector['id']) => {
     const connectTo = connectors.find((c) => c.id === connectorId);
     if (!connectTo) {
       return;
     }
+
     connect(
       { connector: connectTo },
       {
-        onError: (errorConnectData) =>
-          typeof onConnectError === 'function'
-            ? onConnectError({
-                message: errorConnectData.message,
-                name: errorConnectData.name,
-              })
-            : undefined,
-        onSuccess: (connectData) =>
-          typeof onConnectSuccess === 'function'
-            ? onConnectSuccess({
-                chainId: connectData.chainId,
-                walletAddress: connectData.accounts[0],
-              })
-            : undefined,
+        onError: handleOnConnectError,
+        onSuccess: handleOnConnectSuccess,
       },
     );
   };
 
   const handleDisconnectConnect = () => {
     disconnect(undefined, {
-      onError: (errorConnectData) =>
-        typeof onDisconnectError === 'function'
-          ? onDisconnectError({
-              message: errorConnectData.message,
-              name: errorConnectData.name,
-            })
-          : undefined,
+      onError: handleOnDisconnectError,
       onSuccess: onDisconnectSuccess,
     });
   };
