@@ -11,4 +11,10 @@ export const IntegratorPropsContext = createContext<IntegratorProps>({
   onDisconnectSuccess: noop,
 });
 
-export const useIntegratorProps = () => useContext(IntegratorPropsContext);
+export const useIntegratorProps = () => {
+  const context = useContext(IntegratorPropsContext);
+  if (!context) {
+    throw new Error('useIntegratorProps must be used inside IntegratorPropsContext');
+  }
+  return context;
+};
