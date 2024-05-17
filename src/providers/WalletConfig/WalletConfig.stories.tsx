@@ -35,20 +35,7 @@ const ButtonsBox = styled('div')`
 `;
 
 const WalletButtons: React.FunctionComponent = () => {
-  const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect({
-    onConnectError: (data) => {
-      // eslint-disable-next-line
-      console.log('### onConnectError', data);
-    },
-    onConnectSuccess: (data) => {
-      // eslint-disable-next-line
-      console.log('### onConnectSuccess', data);
-    },
-    onDisconnectError: (data) => {
-      // eslint-disable-next-line
-      console.log('### onDisconnectError', data);
-    },
-  });
+  const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect();
   const { signer, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
   const { chainId } = useChain();
   const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});
@@ -180,7 +167,34 @@ const Template: StoryFn<{
   );
   return (
     <ThemeProvider theme="reya">
-      <WalletConfig key={supportedWallets.map((sW) => sW.type).join(',')} config={config}>
+      <WalletConfig
+        key={supportedWallets.map((sW) => sW.type).join(',')}
+        config={config}
+        onConnectError={(data) => {
+          // eslint-disable-next-line
+          console.log('### onConnectError', data);
+        }}
+        onConnectSuccess={(data) => {
+          // eslint-disable-next-line
+          console.log('### onConnectSuccess', data);
+        }}
+        onDisconnectError={(data) => {
+          // eslint-disable-next-line
+          console.log('### onDisconnectError', data);
+        }}
+        onDisconnectSuccess={() => {
+          // eslint-disable-next-line
+          console.log('### onDisconnectSuccess');
+        }}
+        onSwitchChainError={(data) => {
+          // eslint-disable-next-line
+          console.log('### onSwitchChainError', data);
+        }}
+        onSwitchChainSuccess={(data) => {
+          // eslint-disable-next-line
+          console.log('### onSwitchChainSuccess', data);
+        }}
+      >
         <WalletButtons />
         <ChainButton />
       </WalletConfig>

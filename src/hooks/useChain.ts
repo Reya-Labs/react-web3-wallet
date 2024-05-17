@@ -1,5 +1,6 @@
 import { useAccount, useSwitchChain } from 'wagmi';
 
+import { useIntegratorProps } from '../providers/IntegratorPropsProvider';
 import { parseWagmiError } from '../utils/extract-error';
 
 export type UseChainResult = {
@@ -13,11 +14,30 @@ export type UseChainResult = {
 export const useChain = (): UseChainResult => {
   const { switchChain, error, isError, isPending } = useSwitchChain();
   const { chainId } = useAccount();
+  const { onSwitchChainSuccess, onSwitchChainError } = useIntegratorProps();
   const handleSwitchChain = (id: number) => {
     if (chainId === id) {
       return;
     }
-    switchChain({ chainId: id });
+    switchChain(
+      { chainId: id },
+      {
+        onError: (errorConnectData) =>
+          typeof onSwitchChainError === 'function'
+            ? onSwitchChainError({
+                message: errorConnectData.message,
+                name: errorConnectData.name,
+              })
+            : undefined,
+        onSuccess: (connectData) =>
+          typeof onSwitchChainSuccess === 'function'
+            ? onSwitchChainSuccess({
+                chainId: connectData.id,
+                chainName: connectData.name,
+              })
+            : undefined,
+      },
+    );
   };
 
   return {

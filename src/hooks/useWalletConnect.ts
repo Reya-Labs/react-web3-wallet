@@ -1,5 +1,7 @@
 import { Connector, useConnect, useDisconnect } from 'wagmi';
 
+import { useIntegratorProps } from '../providers/IntegratorPropsProvider';
+
 export type ConnectorReadiness = Record<Connector['id'], boolean>;
 
 export type UseWalletConnectResult = {
@@ -15,32 +17,11 @@ export type UseWalletConnectResult = {
   isLoading: boolean;
 };
 
-export type OnConnectSuccessData = {
-  chainId: number;
-  walletAddress: string;
-};
-
-export type OnConnectErrorData = {
-  message: string;
-  name: string;
-};
-
-export type OnDisconnectErrorData = {
-  message: string;
-  name: string;
-};
-
-export type UseWalletConnectParams = {
-  onConnectError?: (data: OnConnectErrorData) => void;
-  onConnectSuccess?: (data: OnConnectSuccessData) => void;
-  onDisconnectError?: (data: OnDisconnectErrorData) => void;
-  onDisconnectSuccess?: () => void;
-};
-
-export const useWalletConnect = (params?: UseWalletConnectParams): UseWalletConnectResult => {
+export const useWalletConnect = (): UseWalletConnectResult => {
   const { connect, connectors, error, isPending } = useConnect();
   const { disconnect } = useDisconnect();
-  const { onConnectSuccess, onConnectError, onDisconnectSuccess, onDisconnectError } = params || {};
+  const { onConnectSuccess, onConnectError, onDisconnectSuccess, onDisconnectError } =
+    useIntegratorProps();
   const handleConnect = (connectorId: Connector['id']) => {
     const connectTo = connectors.find((c) => c.id === connectorId);
     if (!connectTo) {
