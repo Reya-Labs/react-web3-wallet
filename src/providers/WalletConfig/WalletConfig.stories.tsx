@@ -35,7 +35,20 @@ const ButtonsBox = styled('div')`
 `;
 
 const WalletButtons: React.FunctionComponent = () => {
-  const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect();
+  const { getConnectorsReadiness, disconnect, connect, connectors, error } = useWalletConnect({
+    onConnectError: (data) => {
+      // eslint-disable-next-line
+      console.log('### onConnectError', data);
+    },
+    onConnectSuccess: (data) => {
+      // eslint-disable-next-line
+      console.log('### onConnectSuccess', data);
+    },
+    onDisconnectError: (data) => {
+      // eslint-disable-next-line
+      console.log('### onDisconnectError', data);
+    },
+  });
   const { signer, ensName, ensAvatar, address, connector, isConnected } = useWalletAccount();
   const { chainId } = useChain();
   const [readiness, setReadiness] = React.useState<ConnectorReadiness>({});

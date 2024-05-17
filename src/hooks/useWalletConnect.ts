@@ -15,10 +15,25 @@ export type UseWalletConnectResult = {
   isLoading: boolean;
 };
 
+export type OnConnectSuccessData = {
+  chainId: number;
+  walletAddress: string;
+};
+
+export type OnConnectErrorData = {
+  message: string;
+  name: string;
+};
+
+export type OnDisconnectErrorData = {
+  message: string;
+  name: string;
+};
+
 export type UseWalletConnectParams = {
-  onConnectError?: () => void;
-  onConnectSuccess?: () => void;
-  onDisconnectError?: () => void;
+  onConnectError?: (data: OnConnectErrorData) => void;
+  onConnectSuccess?: (data: OnConnectSuccessData) => void;
+  onDisconnectError?: (data: OnDisconnectErrorData) => void;
   onDisconnectSuccess?: () => void;
 };
 
@@ -31,11 +46,38 @@ export const useWalletConnect = (params?: UseWalletConnectParams): UseWalletConn
     if (!connectTo) {
       return;
     }
-    connect({ connector: connectTo }, { onError: onConnectError, onSuccess: onConnectSuccess });
+    connect(
+      { connector: connectTo },
+      {
+        onError: (errorConnectData) =>
+          typeof onConnectError === 'function'
+            ? onConnectError({
+                message: errorConnectData.message,
+                name: errorConnectData.name,
+              })
+            : undefined,
+        onSuccess: (connectData) =>
+          typeof onConnectSuccess === 'function'
+            ? onConnectSuccess({
+                chainId: connectData.chainId,
+                walletAddress: connectData.accounts[0],
+              })
+            : undefined,
+      },
+    );
   };
 
   const handleDisconnectConnect = () => {
-    disconnect(undefined, { onError: onDisconnectError, onSuccess: onDisconnectSuccess });
+    disconnect(undefined, {
+      onError: (errorConnectData) =>
+        typeof onDisconnectError === 'function'
+          ? onDisconnectError({
+              message: errorConnectData.message,
+              name: errorConnectData.name,
+            })
+          : undefined,
+      onSuccess: onDisconnectSuccess,
+    });
   };
 
   return {
