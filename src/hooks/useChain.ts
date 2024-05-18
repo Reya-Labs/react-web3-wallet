@@ -22,13 +22,7 @@ export const useChain = (): UseChainResult => {
     switchChain(
       { chainId: id },
       {
-        onError: (errorConnectData) =>
-          typeof onSwitchChainError === 'function'
-            ? onSwitchChainError({
-                message: errorConnectData.message,
-                name: errorConnectData.name,
-              })
-            : undefined,
+        onError: onSwitchChainError,
         onSuccess: (connectData) =>
           typeof onSwitchChainSuccess === 'function'
             ? onSwitchChainSuccess({

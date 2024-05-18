@@ -23,33 +23,6 @@ export const useWalletConnect = (): UseWalletConnectResult => {
   const { onConnectSuccess, onConnectError, onDisconnectSuccess, onDisconnectError } =
     useIntegratorProps();
 
-  const handleOnConnectError = (data: { message: string; name: string }) =>
-    typeof onConnectError === 'function'
-      ? onConnectError({
-          message: data.message,
-          name: data.name,
-        })
-      : undefined;
-
-  const handleOnConnectSuccess = (data: { accounts: readonly string[]; chainId: number }) => {
-    // eslint-disable-next-line
-    console.log('### handleOnConnectSuccess', data);
-    if (typeof onConnectSuccess === 'function') {
-      onConnectSuccess({
-        chainId: data.chainId,
-        walletAddress: data.accounts[0],
-      });
-    }
-  };
-
-  const handleOnDisconnectError = (data: { message: string; name: string }) =>
-    typeof onDisconnectError === 'function'
-      ? onDisconnectError({
-          message: data.message,
-          name: data.name,
-        })
-      : undefined;
-
   const handleConnect = (connectorId: Connector['id']) => {
     const connectTo = connectors.find((c) => c.id === connectorId);
     if (!connectTo) {
@@ -59,15 +32,21 @@ export const useWalletConnect = (): UseWalletConnectResult => {
     connect(
       { connector: connectTo },
       {
-        onError: handleOnConnectError,
-        onSuccess: handleOnConnectSuccess,
+        onError: onConnectError,
+        onSuccess: (data) =>
+          typeof onConnectSuccess === 'function'
+            ? onConnectSuccess({
+                chainId: data.chainId,
+                walletAddress: data.accounts[0],
+              })
+            : undefined,
       },
     );
   };
 
   const handleDisconnectConnect = () => {
     disconnect(undefined, {
-      onError: handleOnDisconnectError,
+      onError: onDisconnectError,
       onSuccess: onDisconnectSuccess,
     });
   };
