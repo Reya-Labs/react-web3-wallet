@@ -1,6 +1,6 @@
 {
   "name": "@reyaxyz/react-web3-wallet",
-  "version": "2.23.1",
+  "version": "2.23.2",
   "description": "Library that takes care of connecting to different web3 wallets.",
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
