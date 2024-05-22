@@ -29,6 +29,7 @@ Library that takes care of connecting to different web3 wallets.
 # Installation
 
 1. Run `yarn`
+2. Run `npx husky install` to activate **husky**
 
 # Run
 
