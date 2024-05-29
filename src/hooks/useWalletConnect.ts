@@ -24,19 +24,23 @@ export const useWalletConnect = (): UseWalletConnectResult => {
     useIntegratorProps();
 
   const handleConnect = (connectorId: Connector['id']) => {
-    const connectTo = connectors.find((c) => c.id === connectorId);
-    if (!connectTo) {
+    const connector = connectors.find((c) => c.id === connectorId);
+    if (!connector) {
       return;
     }
 
     connect(
-      { connector: connectTo },
+      { connector },
       {
         onError: onConnectError,
         onSuccess: (data) =>
           typeof onConnectSuccess === 'function'
             ? onConnectSuccess({
                 chainId: data.chainId,
+                connector: {
+                  id: connector.id,
+                  name: connector.name,
+                },
                 walletAddress: data.accounts[0],
               })
             : undefined,

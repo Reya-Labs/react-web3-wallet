@@ -3,6 +3,10 @@ import { WagmiProviderProps } from 'wagmi';
 
 export type OnConnectSuccessData = {
   chainId: number;
+  connector: {
+    id: string;
+    name: string;
+  };
   walletAddress: string;
 };
 
