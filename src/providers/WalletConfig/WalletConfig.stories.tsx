@@ -45,7 +45,7 @@ const WalletButtons: React.FunctionComponent = () => {
     if (connectorsLength === 0) {
       return;
     }
-    (async () => {
+    void (async () => {
       const readinessResult = await getConnectorsReadiness();
       setReadiness(readinessResult);
     })();
@@ -89,7 +89,7 @@ const WalletButtons: React.FunctionComponent = () => {
           backgroundColorToken="primary950"
           borderColorToken="primary800"
           bottomLeftText={error ? error.message : ''}
-          bottomLeftTextColorToken="error100"
+          bottomLeftTextColorToken="error500"
           disabled={!readiness[c.id]}
           hoverBorderColorToken="primary500"
           typographyColorToken="primary500"

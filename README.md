@@ -139,7 +139,7 @@ function Profile() {
                 <Button
                     key={c.id}
                     bottomLeftText={error ? error.message : ''}
-                    bottomLeftTextColorToken="error100"
+                    bottomLeftTextColorToken="error500"
                     disabled={c.disabled}
                     variant="primary"
                     onClick={() => connect(c.id)}
